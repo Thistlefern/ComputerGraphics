@@ -15,9 +15,13 @@ public class PlayerController : MonoBehaviour
     public bool isRunning;
     public bool hasJumped;
     public bool isFalling;
+    public float stamina;
+    int staminaMax = 5;
 
     public bool waving;
     public float waveTimer;
+
+    public int candy;
 
     Vector3 rotN = new Vector3(0.0f, 0.0f, 0.0f);
     Vector3 rotNE = new Vector3(0.0f, 45.0f, 0.0f);
@@ -32,12 +36,18 @@ public class PlayerController : MonoBehaviour
     {
         hasJumped = false;
         isFalling = false;
+        stamina = staminaMax;
         waveTimer = 0;
+        candy = 0;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        
+        if (hasJumped && rbody.velocity.y < Mathf.Abs(0.01f))
+        {
+            hasJumped = false;
+            isFalling = false;
+        }
     }
 
     void FixedUpdate()
@@ -45,7 +55,7 @@ public class PlayerController : MonoBehaviour
         Vector3 tVel = Vector3.zero;
         float tempY = rbody.velocity.y;
 
-        if (Input.GetKey(KeyCode.LeftShift) && isMoving)
+        if (Input.GetKey(KeyCode.LeftShift) && isMoving && stamina != 0)
         {
             isRunning = true;
             currentSpeed = runSpeed;
@@ -56,12 +66,6 @@ public class PlayerController : MonoBehaviour
             isRunning = false;
             currentSpeed = walkSpeed;
             animator.SetBool("IsRunning", false);
-        }
-
-        if (Input.GetKeyDown(KeyCode.G) && !isMoving)
-        {
-            waving = true;
-            waveTimer = 2;
         }
 
         if (waving)
@@ -161,17 +165,38 @@ public class PlayerController : MonoBehaviour
                 isFalling = true;
             }
 
-            if (rbody.velocity.y == 0 && isFalling)
-            {
-                hasJumped = false;
-                // animator.SetBool("HasJumped", false);
-                isFalling = false;
-            }
-
             tVel = tVel.normalized * currentSpeed;
-
             tVel.y = tempY;
             rbody.velocity = tVel;
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.G) && !isMoving && !waving)
+        {
+            waving = true;
+            waveTimer = 2;
+        }
+
+        if (isRunning)
+        {
+            stamina -= Time.deltaTime;
+            if(stamina < 0)
+            {
+                stamina = 0;
+            }
+        }
+        else
+        {
+            if (!Input.GetKey(KeyCode.LeftShift))
+            {
+                stamina += Time.deltaTime;
+                if(stamina > staminaMax)
+                {
+                    stamina = staminaMax;
+                }
+            }
         }
     }
 }
