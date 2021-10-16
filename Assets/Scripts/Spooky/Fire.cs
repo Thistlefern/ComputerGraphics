@@ -7,8 +7,10 @@ public class Fire : MonoBehaviour
 {
     public Text fireText;
     public bool fireOn;
-    public GameObject fire;
+    public ParticleSystem fire;
     public bool inRange;
+    public GhostQuest ghost;
+    public PlayerController player;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -21,14 +23,16 @@ public class Fire : MonoBehaviour
         inRange = false;
     }
 
+    [System.Obsolete]
     void Start()
     {
         fireText.text = "";
         fireOn = false;
-        fire.SetActive(false);
+        fire.loop = false;
         inRange = false;
     }
 
+    [System.Obsolete]
     private void Update()
     {
         if (inRange)
@@ -38,17 +42,29 @@ public class Fire : MonoBehaviour
                 fireText.text = "Press E to light fire";
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    fire.SetActive(true);
+                    fire.loop = true;
+                    fire.Play();
                     fireOn = true;
                 }
             }
             else
             {
-                fireText.text = "Press E to extinguish fire";
-                if (Input.GetKeyDown(KeyCode.E))
+                if (ghost.questStarted && !player.hasGlue)
                 {
-                    fire.SetActive(false);
-                    fireOn = false;
+                    fireText.text = "Press E to make glue";
+                    if (Input.GetKeyDown(KeyCode.E))
+                    {
+                        player.hasGlue = true;
+                    }
+                }
+                else
+                {
+                    fireText.text = "Press E to extinguish fire";
+                    if (Input.GetKeyDown(KeyCode.E))
+                    {
+                        fire.loop = false;
+                        fireOn = false;
+                    }
                 }
             }
         }

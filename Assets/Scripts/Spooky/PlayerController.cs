@@ -13,15 +13,19 @@ public class PlayerController : MonoBehaviour
 
     public bool isMoving;
     public bool isRunning;
-    public bool hasJumped;
+    //public bool hasJumped;
     public bool isFalling;
     public float stamina;
     int staminaMax = 5;
+
+    public bool grounded;
+    public bool onDirt;
 
     public bool waving;
     public float waveTimer;
 
     public int candy;
+    public bool hasGlue;
 
     Vector3 rotN = new Vector3(0.0f, 0.0f, 0.0f);
     Vector3 rotNE = new Vector3(0.0f, 45.0f, 0.0f);
@@ -34,19 +38,32 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        hasJumped = false;
         isFalling = false;
         stamina = staminaMax;
+
+        grounded = true;
+        onDirt = true;
+
         waveTimer = 0;
+
         candy = 0;
+        hasGlue = false;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (hasJumped && rbody.velocity.y < Mathf.Abs(0.01f))
+        if (rbody.velocity.y < Mathf.Abs(0.01f))
         {
-            hasJumped = false;
+            grounded = true;
             isFalling = false;
+            if(collision.collider.name != "Plane")
+            {
+                onDirt = false;
+            }
+            else
+            {
+                onDirt = true;
+            }
         }
     }
 
@@ -83,7 +100,6 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("Waving", false);
             if (Input.GetKey(KeyCode.W))
             {
-                // transform.position += transform.forward * currentSpeed * Time.fixedDeltaTime;
                 tVel += transform.forward;
                 isMoving = true;
                 if (Input.GetKey(KeyCode.A))
@@ -101,7 +117,6 @@ public class PlayerController : MonoBehaviour
             }
             if (Input.GetKey(KeyCode.S))
             {
-                // transform.position += transform.forward * currentSpeed * Time.fixedDeltaTime;
                 tVel += transform.forward;
                 isMoving = true;
                 if (Input.GetKey(KeyCode.A))
@@ -122,7 +137,6 @@ public class PlayerController : MonoBehaviour
                 isMoving = true;
                 if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S))
                 {
-                    // transform.position += transform.forward * currentSpeed * Time.fixedDeltaTime;
                     tVel += transform.forward;
                     transform.rotation = Quaternion.Euler(rotW);
                 }
@@ -132,7 +146,6 @@ public class PlayerController : MonoBehaviour
                 isMoving = true;
                 if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S))
                 {
-                    // transform.position += transform.forward * currentSpeed * Time.fixedDeltaTime;
                     tVel += transform.forward;
                     transform.rotation = Quaternion.Euler(rotE);
                 }
@@ -143,12 +156,12 @@ public class PlayerController : MonoBehaviour
                 isMoving = false;
             }
 
-            if (Input.GetKey(KeyCode.Space) && !hasJumped)
+            if (Input.GetKey(KeyCode.Space) && grounded)
             {
                 isMoving = false;
+                onDirt = false;
                 rbody.AddForce(transform.up * jumpHeight, ForceMode.Impulse);
-                hasJumped = true;
-                // animator.SetBool("HasJumped", true);
+                grounded = false;
             }
 
             if (isMoving)
