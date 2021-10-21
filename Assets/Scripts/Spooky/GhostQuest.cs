@@ -10,6 +10,9 @@ public class GhostQuest : MonoBehaviour
     public bool headstoneFixed;
     public Text interact;
     public bool inRange;
+    //public Material body;
+    //public Material face;
+    public Animator animator;
 
     public GameObject brokenStone;
     public GameObject fixedStone;

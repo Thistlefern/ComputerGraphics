@@ -1528,6 +1528,7 @@ MonoBehaviour:
   headstoneFixed: 0
   interact: {fileID: 1384928578}
   inRange: 0
+  animator: {fileID: 1088610650}
   brokenStone: {fileID: 1663216781}
   fixedStone: {fileID: 400627244}
   sentences:
@@ -1706,6 +1707,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 2da3cbb423a46e54aab5356e9137647b, type: 3}
       propertyPath: m_Name
       value: cookie
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2da3cbb423a46e54aab5356e9137647b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2da3cbb423a46e54aab5356e9137647b, type: 3}
@@ -5107,7 +5112,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 611774350}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 04a0924f0c739364f8446e7a78c15d48, type: 2}
   m_CullingMode: 0
@@ -6802,7 +6807,10 @@ MonoBehaviour:
   timeInterval: 0.05
   whichSentence: 0
   ghost: {fileID: 169446885}
+  actualGhost: {fileID: 1088610648}
   player: {fileID: 1951960558}
+  cookie: {fileID: 1431587823}
+  goodbyeTimer: 2
 --- !u!1 &814216019 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d4f125ab3fe581b488d72963ace1cb8c, type: 3}
@@ -10261,7 +10269,7 @@ PrefabInstance:
     - target: {fileID: -8434230010029723051, guid: 2fefdb73d07f732478d1754d03f3a9f3, type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: -5173966397720942367, guid: 2fefdb73d07f732478d1754d03f3a9f3, type: 3}
+      objectReference: {fileID: 2100000, guid: d093c3ef84111064090cfe0f85366989, type: 2}
     - target: {fileID: -7324502909109930383, guid: 2fefdb73d07f732478d1754d03f3a9f3, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
@@ -10270,9 +10278,41 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3670109843512462444, guid: 2fefdb73d07f732478d1754d03f3a9f3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3670109843512462444, guid: 2fefdb73d07f732478d1754d03f3a9f3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3670109843512462444, guid: 2fefdb73d07f732478d1754d03f3a9f3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3670109843512462444, guid: 2fefdb73d07f732478d1754d03f3a9f3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -3670109843512462444, guid: 2fefdb73d07f732478d1754d03f3a9f3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3670109843512462444, guid: 2fefdb73d07f732478d1754d03f3a9f3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3670109843512462444, guid: 2fefdb73d07f732478d1754d03f3a9f3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2fefdb73d07f732478d1754d03f3a9f3, type: 3}
       propertyPath: m_Name
       value: ghost
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2fefdb73d07f732478d1754d03f3a9f3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8513906660729054191, guid: 2fefdb73d07f732478d1754d03f3a9f3, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -12146,7 +12186,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1431587824
 Transform:
   m_ObjectHideFlags: 0
@@ -12171,7 +12211,7 @@ BoxCollider:
   m_GameObject: {fileID: 1431587823}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.5, y: 1.25, z: 0.5}
   m_Center: {x: 0, y: 0.5, z: 0}
@@ -21494,7 +21534,7 @@ MonoBehaviour:
   waving: 0
   waveTimer: 0
   candy: 0
-  hasGlue: 0
+  hasGlue: 1
 --- !u!82 &1951960559
 AudioSource:
   m_ObjectHideFlags: 0

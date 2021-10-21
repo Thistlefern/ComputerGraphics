@@ -18,7 +18,11 @@ public class LetterByLetter : MonoBehaviour
 
     public int whichSentence;
     public GhostQuest ghost;
+    public GameObject actualGhost;
     public PlayerController player;
+    public GameObject cookie;
+
+    public float goodbyeTimer = 2;
 
     void Start()
     {
@@ -32,10 +36,29 @@ public class LetterByLetter : MonoBehaviour
         cont.text = "";
         
         timer = 0;
+
+        cookie.SetActive(false);
     }
 
     void Update()
     {
+        if (!ghost.questStarted && ghost.headstoneFixed && goodbyeTimer > 0)
+        {
+            cookie.SetActive(true);
+            goodbyeTimer -= Time.deltaTime;
+            if(goodbyeTimer <= 0)
+            {
+                actualGhost.SetActive(false);
+            }
+        }
+
+        if (ghost.headstoneFixed && ghost.questStarted)
+        {
+            whichSentence = 2;
+            inputText = ghost.sentences[whichSentence];
+            letters = inputText.ToCharArray();
+        }
+
         if (ghost.talking)
         {
             if(currentLetter <= inputText.Length)
@@ -79,7 +102,10 @@ public class LetterByLetter : MonoBehaviour
                         }
                         else
                         {
-                            Debug.Log("oops");
+                            ghost.questStarted = false;
+                            ghost.talkBox.SetActive(false);
+                            ghost.talking = false;
+                            ghost.animator.SetBool("Goodbye", true);
                         }
                     }
                 }
