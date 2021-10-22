@@ -21,6 +21,7 @@ public class LetterByLetter : MonoBehaviour
     public GameObject actualGhost;
     public PlayerController player;
     public GameObject cookie;
+    public bool cookieDestroyed;
 
     public float goodbyeTimer = 2;
 
@@ -42,7 +43,7 @@ public class LetterByLetter : MonoBehaviour
 
     void Update()
     {
-        if (!ghost.questStarted && ghost.headstoneFixed && goodbyeTimer > 0)
+        if (!ghost.questStarted && ghost.headstoneFixed && goodbyeTimer > 0 && !cookieDestroyed)
         {
             cookie.SetActive(true);
             goodbyeTimer -= Time.deltaTime;
@@ -91,6 +92,7 @@ public class LetterByLetter : MonoBehaviour
                         {
                             ghost.talkBox.SetActive(false);
                             ghost.talking = false;
+                            player.ghostTalking = false;
                             whichSentence = 0;
                             currentLetter = 0;
                             inputText = ghost.sentences[whichSentence];
@@ -105,7 +107,10 @@ public class LetterByLetter : MonoBehaviour
                             ghost.questStarted = false;
                             ghost.talkBox.SetActive(false);
                             ghost.talking = false;
+                            player.ghostTalking = false;
                             ghost.animator.SetBool("Goodbye", true);
+                            ghost.inRange = false;
+                            ghost.interact.text = "";
                         }
                     }
                 }

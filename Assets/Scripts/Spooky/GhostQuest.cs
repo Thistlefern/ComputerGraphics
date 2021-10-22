@@ -10,9 +10,9 @@ public class GhostQuest : MonoBehaviour
     public bool headstoneFixed;
     public Text interact;
     public bool inRange;
-    //public Material body;
-    //public Material face;
     public Animator animator;
+    public new AudioSource audio;
+    public AudioClip clip;
 
     public GameObject brokenStone;
     public GameObject fixedStone;
@@ -27,7 +27,6 @@ public class GhostQuest : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         inRange = true;
-        interact.text = interactText;
     }
 
     private void OnTriggerExit(Collider other)
@@ -61,17 +60,25 @@ public class GhostQuest : MonoBehaviour
             interactText = "Press E to interact";
         }
 
+        if (inRange)
+        {
+            interact.text = interactText;
+        }
+
         if(inRange && Input.GetKeyDown(KeyCode.E) && !talking)
         {
             if (!player.hasGlue)
             {
                 talking = true;
+                audio.PlayOneShot(clip);
+                player.ghostTalking = true;
                 talkBox.gameObject.SetActive(true);
             }
             else
             {
                 brokenStone.SetActive(false);
                 fixedStone.SetActive(true);
+                // TODO fixed sound here
                 headstoneFixed = true;
                 player.hasGlue = false;
             }

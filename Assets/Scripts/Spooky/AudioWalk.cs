@@ -9,6 +9,7 @@ public class AudioWalk : MonoBehaviour
     public AudioSource source;
     public AudioClip[] sounds = new AudioClip[4];
     float timeBetweenSteps;
+    public GroundType groundTypeCheck;
 
     [SerializeField]
     float stepTimer;
@@ -44,7 +45,7 @@ public class AudioWalk : MonoBehaviour
             }
         }
 
-        if (player.onDirt)
+        if (groundTypeCheck.name == "Plane")
         {
             source.clip = sounds[0];
         }
@@ -68,7 +69,7 @@ public class AudioWalk : MonoBehaviour
             stepTimer = timeBetweenSteps;
             audioPlaying = true;
 
-            if (player.onDirt)
+            if (groundTypeCheck.name == "Plane")
             {
                 if(source.clip == sounds[0])
                 {

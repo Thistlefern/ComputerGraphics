@@ -12,6 +12,8 @@ public class Fire : MonoBehaviour
     public GhostQuest ghost;
     public PlayerController player;
 
+    // TODO fire sounds
+
     private void OnTriggerEnter(Collider other)
     {
         inRange = true;
