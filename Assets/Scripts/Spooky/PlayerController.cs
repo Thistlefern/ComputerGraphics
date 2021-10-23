@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    // list of things needed, not necessarily in this script
+    // TODO movement control indication
+    // TODO glue obtained indication
+    // TODO win state
+    
     public int currentSpeed;
     public int walkSpeed;
     public int runSpeed;
