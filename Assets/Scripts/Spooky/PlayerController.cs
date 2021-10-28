@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     public float jumpHeight;
     public Animator animator;
     public new AudioWalk audio;
-    bool gameOver;
+    public bool gameOver;
 
     public bool isMoving;
     public bool isRunning;
