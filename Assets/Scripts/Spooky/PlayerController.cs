@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     public new AudioWalk audio;
     public bool gameOver;
+    public bool gameStarted;
 
     public bool isMoving;
     public bool isRunning;
@@ -32,7 +33,7 @@ public class PlayerController : MonoBehaviour
     public int candy;
     public bool hasGlue;
 
-    public bool ghostTalking;
+    public bool talking;    // just determines whether you can move or not (you can't move if you are talking to someone)
 
     Vector3 rotN = new Vector3(0.0f, 0.0f, 0.0f);
     Vector3 rotNE = new Vector3(0.0f, 45.0f, 0.0f);
@@ -45,6 +46,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        gameStarted = false;
+        
         isFalling = false;
         stamina = staminaMax;
 
@@ -75,7 +78,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!gameOver)
+        if (!gameOver && gameStarted)
         {
             Vector3 tVel = Vector3.zero;
             float tempY = rbody.velocity.y;
@@ -106,7 +109,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 animator.SetBool("Waving", false);
-                if (!ghostTalking)
+                if (!talking)
                 {
                     if (Input.GetKey(KeyCode.W))
                     {

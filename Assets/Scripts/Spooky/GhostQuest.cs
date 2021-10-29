@@ -21,6 +21,7 @@ public class GhostQuest : MonoBehaviour
 
     public GameObject talkBox;
     public bool talking;
+    public GameObject profile;
 
     string interactText;
 
@@ -45,7 +46,8 @@ public class GhostQuest : MonoBehaviour
         sentences[0] = "Boo hoo...some kids knocked over my headstone, and now I can't go back to sleep...";
         sentences[1] = "Could you please help me? If you got some glue, my headstone could be fixed!";
         sentences[2] = "Thank you so much! Time for a nap. Here, take this for your troubles!";
-
+        
+        profile.SetActive(false);
         talkBox.gameObject.SetActive(false);
     }
 
@@ -71,14 +73,15 @@ public class GhostQuest : MonoBehaviour
             {
                 talking = true;
                 audio.PlayOneShot(clip);
-                player.ghostTalking = true;
+                player.talking = true;
                 talkBox.gameObject.SetActive(true);
+                profile.SetActive(true);
             }
             else
             {
                 brokenStone.SetActive(false);
                 fixedStone.SetActive(true);
-                // TODO fixed sound here
+                // TODO tombstone fixed sound here
                 headstoneFixed = true;
                 player.hasGlue = false;
             }

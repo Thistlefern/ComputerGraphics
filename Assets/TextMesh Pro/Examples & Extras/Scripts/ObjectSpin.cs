@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
 namespace TMPro.Examples
 {
-    
     public class ObjectSpin : MonoBehaviour
     {
 
@@ -34,8 +32,6 @@ namespace TMPro.Examples
             m_lightColor = light != null ? light.color : Color.black;
         }
 
-
-        // Update is called once per frame
         void Update()
         {
             if (Motion == MotionType.Rotation)

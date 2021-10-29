@@ -9,14 +9,12 @@ public class DeathFade : MonoBehaviour
     bool dead;
     float lilTimer;
 
-    // Start is called before the first frame update
     void Start()
     {
         dead = false;
         lilTimer = 0.5f;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.K))

@@ -90,9 +90,10 @@ public class LetterByLetter : MonoBehaviour
                     {
                         if (!ghost.headstoneFixed)
                         {
+                            ghost.profile.SetActive(false);
                             ghost.talkBox.SetActive(false);
                             ghost.talking = false;
-                            player.ghostTalking = false;
+                            player.talking = false;
                             whichSentence = 0;
                             currentLetter = 0;
                             inputText = ghost.sentences[whichSentence];
@@ -106,8 +107,9 @@ public class LetterByLetter : MonoBehaviour
                         {
                             ghost.questStarted = false;
                             ghost.talkBox.SetActive(false);
+                            ghost.profile.SetActive(false);
                             ghost.talking = false;
-                            player.ghostTalking = false;
+                            player.talking = false;
                             ghost.animator.SetBool("Goodbye", true);
                             ghost.inRange = false;
                             ghost.interact.text = "";
