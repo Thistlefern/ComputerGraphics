@@ -113,7 +113,7 @@ public class KinematicBody : MonoBehaviour
         bodyPosition = GetCenterAtBodyPosition(bodyPosition);
         var allHits = Physics.BoxCastAll(bodyPosition, LocalBodySizeWithSkin/2, direction, rbody.rotation, distance, layerMask, queryMode);
 
-        // TODO: this is terribly inefficient and generates garbage, please optimize this
+        // TODO*: this is terribly inefficient and generates garbage, please optimize this
         List<RaycastHit> filteredhits = new List<RaycastHit>(allHits);
         filteredhits.RemoveAll( x => x.collider == col);
         return filteredhits.ToArray();
@@ -158,7 +158,7 @@ public class KinematicBody : MonoBehaviour
 
         var candidates = Overlap(projectedPos, sizeWithSkin / 2);
 
-        // HACK: since we can't pass a custom size to Physics.ComputePenetration (see below),
+        // NOTE: since we can't pass a custom size to Physics.ComputePenetration (see below),
         //       we need to assign it directly to the collide prior to calling it and then
         //       revert the change afterwards
         col.size = sizeWithSkin;
@@ -168,7 +168,7 @@ public class KinematicBody : MonoBehaviour
             DeferredCollideAndSlide(ref projectedPos, ref projectedVel, candidate);
         }
         
-        // HACK: restoring size (see above HACK)
+        // NOTE: restoring size (see above NOTE)
         col.size = sizeOriginal;
         
         // callback: pre-processing move before applying 
@@ -216,7 +216,7 @@ public interface IKinematicMotor
     /// <param name="pen">Penetration depth</param>
     void OnMoveHit(ref Vector3 curPosition, ref Vector3 curVelocity, Collider other, Vector3 direction, float pen);
 
-    // TODO: Make these callbacks instead of part of the interface
+    // TODO*: Make these callbacks instead of part of the interface
     
     /// <summary>
     /// Called before the body has begun moving

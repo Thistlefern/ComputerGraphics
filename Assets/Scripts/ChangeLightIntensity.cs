@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ChangeLightIntensity : MonoBehaviour
 {
-    public Light light;
+    public new Light light;
 
     void Start()
     {

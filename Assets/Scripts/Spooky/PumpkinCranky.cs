@@ -10,7 +10,7 @@ public class PumpkinCranky : MonoBehaviour
     string interactText;    // the text which shows when the player is in range
     public Text interact;   // the object that holds the interectText
 
-    string[] sentences = new string[6]; // array that holds the sentences
+    string[] sentences = new string[7]; // array that holds the sentences
     public int whichSentence;           // number which determines which sentence from the array is the current focus
 
     public GameObject talkBox;
@@ -52,7 +52,8 @@ public class PumpkinCranky : MonoBehaviour
         sentences[2] = "It was pretty funny to watch, honestly.";
         sentences[3] = "But, as usual, teenagers can't exist without making a mess, can they?";
         sentences[4] = "Mind cleaning up the candy they left behind? It really kills the spooky vibe.";
-        sentences[5] = "Use WASD to move, and Space to jump. Ask my brother up on that headstone for hints if you need them.";
+        sentences[5] = "Use WASD to move, Left Shift to run, and Space to jump.";
+        sentences[6] = "Ask my brother up on that headstone for hints if you need them.";
         #endregion
 
         whichSentence = 0;                          // set to 0 so as to use the first sentence in the sentences array when talking starts

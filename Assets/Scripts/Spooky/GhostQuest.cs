@@ -13,6 +13,7 @@ public class GhostQuest : MonoBehaviour
     public Animator animator;
     public new AudioSource audio;
     public AudioClip clip;
+    public AudioClip fixedClip;
 
     public GameObject brokenStone;
     public GameObject fixedStone;
@@ -81,7 +82,7 @@ public class GhostQuest : MonoBehaviour
             {
                 brokenStone.SetActive(false);
                 fixedStone.SetActive(true);
-                // TODO tombstone fixed sound here
+                audio.PlayOneShot(fixedClip);
                 headstoneFixed = true;
                 player.hasGlue = false;
             }

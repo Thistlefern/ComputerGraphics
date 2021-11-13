@@ -10,8 +10,8 @@ public class PumpkinNice : MonoBehaviour
     string interactText;    // the text which shows when the player is in range
     public Text interact;   // the object that holds the interectText
 
-    // TODO adjust the number below to match number of sentences
-    string[] sentences = new string[1]; // array that holds the sentences
+    // TODO add hints and adjust number of sentences in array
+    string[] sentences = new string[5]; // array that holds the sentences, adjust this number to match number of sentences
     public int whichSentence;           // number which determines which sentence from the array is the current focus
 
     public GameObject talkBox;
@@ -19,7 +19,7 @@ public class PumpkinNice : MonoBehaviour
     string inputText;           // grabs a sentence from the sentences array per the whichSentence number
     public char[] letters;      // takes the sentence above, one letter at a time
     public char[] output;       // will populate with the stored sentence as time goes on
-    public int currentLetter;          // keeps track of where in the stored sentence needs to be printed to output next
+    public int currentLetter;   // keeps track of where in the stored sentence needs to be printed to output next
     float timer;                // keeps track of the time since the last letter was printed
     public float timeInterval;  // the time between letters being printed
     public Text text;           // the object that prints the output
@@ -30,6 +30,9 @@ public class PumpkinNice : MonoBehaviour
     bool talking;                   // checks if the character is currently talking
 
     public PlayerController player;     // the player
+
+    public GhostQuest ghost;
+    bool clues2;
 
     private void OnTriggerEnter(Collider other)     // when the player enters the area of a TRIGGER collider connected to this script...
     {
@@ -46,11 +49,10 @@ public class PumpkinNice : MonoBehaviour
     {
         #region sentences
         sentences[0] = "Happy Halloween! Need some hints? Well you're in luck, they're my specialty!";
-        //sentences[1] = "The candies you need to find are hidden all around the boneyard, some pieces better than others.";
-        //sentences[2] = "Keep an eye out for shadows, as sometimes this is the easiest way to spot a candy.";
-        //sentences[3] = "Sometimes, you'll even have to jump on top of things to get candy!";
-        //sentences[4] = "There's a headstone nearby that has will-o-wisps hanging out around it. They can help lead you to candy!";
-        //sentences[5] = "";
+        sentences[1] = "The candies you need to find are hidden all around the boneyard, some pieces better than others.";
+        sentences[2] = "Keep an eye out for shadows, as sometimes this is the easiest way to spot a candy.";
+        sentences[3] = "You'll probably even have to jump on top of things to get some candies!";
+        sentences[4] = "There's a headstone nearby that has will-o-wisps hanging out around it. They can help lead you to candy!";
         #endregion
 
         whichSentence = 0;                          // set to 0 so as to use the first sentence in the sentences array when talking starts
@@ -67,6 +69,23 @@ public class PumpkinNice : MonoBehaviour
 
     void Update()
     {
+        if (clues2)
+        {
+            sentences[0] = "Happy Halloween! Need some hints? Well you're in luck, they're my specialty!";
+            sentences[1] = "Oh! It seems that you need to get some glue for that friendly ghost.";
+            sentences[2] = "To make some glue, you'll just need a fire and a bone.";
+            sentences[3] = "There's a fire basket on top of the pillar at the center of the cemetary.";
+            sentences[4] = "And I'm sure you've got a rib you can spare! Get it? Spare rib? Haha!";
+        }
+        else
+        {
+            sentences[0] = "Happy Halloween! Need some hints? Well you're in luck, they're my specialty!";
+            sentences[1] = "The candies you need to find are hidden all around the boneyard, some pieces better than others.";
+            sentences[2] = "Keep an eye out for shadows, as sometimes this is the easiest way to spot a candy.";
+            sentences[3] = "You'll probably even have to jump on top of things to get some candies!";
+            sentences[4] = "There's a headstone nearby that has will-o-wisps hanging out around it. They can help lead you to candy!";
+        }
+
         if (inRange && Input.GetKeyDown(KeyCode.E) && !talking)     // when you aren't talking yet but E is pressed in range, do the following:
         {
             talking = true;                                         // - set the talking value to true
@@ -106,12 +125,29 @@ public class PumpkinNice : MonoBehaviour
                     {                                               // when you have reached the end of the last sentence, do the following:
                         profile.SetActive(false);                   // - hide the profile picture
                         talkBox.SetActive(false);                   // - hide the talk box
-                        currentLetter = 0;                          // - reset the current letter (you could also reset the sentance here, but for this implementation I want the last sentence to repeat if talking starts again)
+                        whichSentence = 0;                          // - reset the current sentence
+                        currentLetter = 0;                          // - reset the current letter
+                        inputText = sentences[whichSentence];       // - repopulate the input text to reflect the new sentence
                         talking = false;                            // - set talking value to false
                         player.talking = false;                     // - set the player's talking value to false
                         player.gameStarted = true;                  // - start the game, so the player can move
+                        Array.Clear(letters, 0, letters.Length);    // - clear the old letters from the letters array
                         Array.Clear(output, 0, output.Length);      // - clear the output array (you would want to clear the input array as well if you are going to other sentences after this
+                        letters = inputText.ToCharArray();          // - repopulate the letters array to reflect the new sentence
+                        output = new char[inputText.Length];        // - adjust the number of values in the output array, but don't populate yet
                         cont.text = "";                             // - clear the continue text
+
+                        if (ghost.questStarted)
+                        {
+                            if (!clues2)
+                            {
+                                clues2 = true;
+                            }
+                            else
+                            {
+                                clues2 = false;
+                            }
+                        }
                     }
                 }
             }
