@@ -6,9 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Spooky/SpookyMenu.unity
+    path: Assets/Scenes/Spooky/SpookyWin.unity
     guid: 8177af4b007788243a1f57d7e5da9be4
   - enabled: 1
     path: Assets/Scenes/Spooky/Spooky!.unity
     guid: b9e82db58b646124797a9bf0ea549fd8
+  - enabled: 1
+    path: Assets/Scenes/Spooky/SpookyMenu.unity
+    guid: 1a0f9c88e83a4ab42b82a0871f634bd3
   m_configObjects: {}

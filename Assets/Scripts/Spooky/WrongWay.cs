@@ -17,9 +17,4 @@ public class WrongWay : MonoBehaviour
     {
         wrongWayText.text = "";
     }
-
-    void Start()
-    {
-        //text.gameObject.SetActive(false);
-    }
 }

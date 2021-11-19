@@ -25,6 +25,7 @@ public class GhostQuest : MonoBehaviour
     public GameObject profile;
 
     string interactText;
+    public UIScriptSpooky ui;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -68,7 +69,7 @@ public class GhostQuest : MonoBehaviour
             interact.text = interactText;
         }
 
-        if(inRange && Input.GetKeyDown(KeyCode.E) && !talking)
+        if(inRange && Input.GetKeyDown(KeyCode.E) && !talking && !ui.paused)
         {
             if (!player.hasGlue)
             {

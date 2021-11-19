@@ -8,6 +8,7 @@ public class Candy : MonoBehaviour
     public new AudioSource audio;
     public AudioClip clip;
     public LetterByLetter ghostWords;
+    public Animator animator;
 
     private void OnTriggerEnter(Collider other)
     {

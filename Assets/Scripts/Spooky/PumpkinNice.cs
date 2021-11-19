@@ -7,11 +7,9 @@ using System;
 public class PumpkinNice : MonoBehaviour
 {
     bool inRange;           // checks if player is in range
-    string interactText;    // the text which shows when the player is in range
     public Text interact;   // the object that holds the interectText
 
-    // TODO add hints and adjust number of sentences in array
-    string[] sentences = new string[5]; // array that holds the sentences, adjust this number to match number of sentences
+    readonly string[] sentences = new string[5]; // array that holds the sentences, adjust this number to match number of sentences
     public int whichSentence;           // number which determines which sentence from the array is the current focus
 
     public GameObject talkBox;
@@ -27,12 +25,14 @@ public class PumpkinNice : MonoBehaviour
 
     public new AudioSource audio;   // audio source for the sound of talking
     public AudioClip clip;          // clip of talking
-    bool talking;                   // checks if the character is currently talking
+    public bool talking;            // checks if the character is currently talking
 
     public PlayerController player;     // the player
+    public UIScriptSpooky ui;
 
     public GhostQuest ghost;
     bool clues2;
+    bool questJustReceived;
 
     private void OnTriggerEnter(Collider other)     // when the player enters the area of a TRIGGER collider connected to this script...
     {
@@ -65,10 +65,22 @@ public class PumpkinNice : MonoBehaviour
         cont.text = "";                             // make sure the continue text is clear
 
         timer = 0;                                  // set the timer so it will have no accumulated time to start
+
+        questJustReceived = false;
     }
 
     void Update()
     {
+        if (ghost.questStarted && !questJustReceived)
+        {
+            questJustReceived = true;
+            clues2 = true;
+        }
+        if (ghost.headstoneFixed)
+        {
+            clues2 = false;
+        }
+
         if (clues2)
         {
             sentences[0] = "Happy Halloween! Need some hints? Well you're in luck, they're my specialty!";
@@ -86,7 +98,7 @@ public class PumpkinNice : MonoBehaviour
             sentences[4] = "There's a headstone nearby that has will-o-wisps hanging out around it. They can help lead you to candy!";
         }
 
-        if (inRange && Input.GetKeyDown(KeyCode.E) && !talking)     // when you aren't talking yet but E is pressed in range, do the following:
+        if (inRange && Input.GetKeyDown(KeyCode.E) && !talking && !ui.paused)     // when you aren't talking yet but E is pressed in range and the game isn't paused, do the following:
         {
             talking = true;                                         // - set the talking value to true
             player.talking = true;                                  // - set the player's talking value to true (makes the player unable to move, in this implementation
@@ -108,7 +120,7 @@ public class PumpkinNice : MonoBehaviour
             {
                 cont.text = "Press E to continue";          // when you've reached the last letter, the continue text pops up
 
-                if (Input.GetKeyDown(KeyCode.E))            // if E is pressed while the text is on the last letter...
+                if (Input.GetKeyDown(KeyCode.E) && !ui.paused)            // if E is pressed while the text is on the last letter...
                 {
                     if (whichSentence < sentences.Length - 1)        // so long as you haven't reached the last sentence, do the following:
                     {

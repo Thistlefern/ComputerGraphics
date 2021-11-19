@@ -1,13 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    // list of things needed, not necessarily in this script
-    // TODO glue obtained indication
-    // TODO win state
-    
     public int currentSpeed;
     public int walkSpeed;
     public int runSpeed;
@@ -33,6 +30,15 @@ public class PlayerController : MonoBehaviour
     public bool hasGlue;
 
     public bool talking;    // just determines whether you can move or not (you can't move if you are talking to someone)
+
+    // TODO achievments would be cool
+    // ideas:
+    // hint hound: ask for hints x number of times
+    // time challenge: find all the candies in x amount of time or less
+    // you're no help: ask for no help
+    // crazy jump: make a super high jump
+    // wanderlust: try and leave the boneyard x number of times
+    // will-o-wisp friend: get help from the wisps to find all pieces of candy
 
     Vector3 rotN = new Vector3(0.0f, 0.0f, 0.0f);
     Vector3 rotNE = new Vector3(0.0f, 45.0f, 0.0f);
@@ -195,6 +201,13 @@ public class PlayerController : MonoBehaviour
                 rbody.velocity = tVel;
             }
         }
+        else
+        {
+            rbody.velocity = new Vector3(0, 0);
+            animator.SetBool("IsWalking", false);
+            animator.SetBool("IsRunning", false);
+            isMoving = false;
+        }
     }
 
     private void Update()
@@ -203,12 +216,8 @@ public class PlayerController : MonoBehaviour
         {
             if (candy == 5)
             {
-                rbody.velocity = Vector3.zero;
-                gameOver = true;
-                Debug.Log("Congrats!");
-                animator.SetBool("IsRunning", false);
-                animator.SetBool("IsWalking", false);
-                audio.source.mute = true;
+
+                SceneManager.LoadScene("SpookyWin");
             }
 
             if (Input.GetKeyDown(KeyCode.G) && !isMoving && !waving)

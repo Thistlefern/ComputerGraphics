@@ -8,6 +8,7 @@ public class WillOWisp : MonoBehaviour
 {
     public PlayerController player;
     public GameObject[] particles;
+    public new ParticleSystem particleSystem;
 
     public Text text;
     bool inRange;
@@ -80,14 +81,6 @@ public class WillOWisp : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && inRange)
         {
             particles[whichCandy].SetActive(true);
-            //if (particles[number] == null)
-            //{
-            //    number++;
-            //}
-            //else
-            //{
-            //    particles[number].SetActive(true);
-            //}
         }
     }
 }

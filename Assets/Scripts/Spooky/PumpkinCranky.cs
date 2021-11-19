@@ -7,10 +7,9 @@ using System;
 public class PumpkinCranky : MonoBehaviour
 {
     bool inRange;           // checks if player is in range
-    string interactText;    // the text which shows when the player is in range
     public Text interact;   // the object that holds the interectText
 
-    string[] sentences = new string[7]; // array that holds the sentences
+    readonly string[] sentences = new string[7]; // array that holds the sentences
     public int whichSentence;           // number which determines which sentence from the array is the current focus
 
     public GameObject talkBox;
@@ -18,7 +17,7 @@ public class PumpkinCranky : MonoBehaviour
     string inputText;           // grabs a sentence from the sentences array per the whichSentence number
     public char[] letters;      // takes the sentence above, one letter at a time
     public char[] output;       // will populate with the stored sentence as time goes on
-    public int currentLetter;          // keeps track of where in the stored sentence needs to be printed to output next
+    public int currentLetter;   // keeps track of where in the stored sentence needs to be printed to output next
     float timer;                // keeps track of the time since the last letter was printed
     public float timeInterval;  // the time between letters being printed
     public Text text;           // the object that prints the output
@@ -29,6 +28,7 @@ public class PumpkinCranky : MonoBehaviour
     bool talking;                   // checks if the character is currently talking
 
     public PlayerController player;     // the player
+    public UIScriptSpooky ui;
 
     private void OnTriggerEnter(Collider other)     // when the player enters the area of a TRIGGER collider connected to this script...
     {
@@ -52,8 +52,8 @@ public class PumpkinCranky : MonoBehaviour
         sentences[2] = "It was pretty funny to watch, honestly.";
         sentences[3] = "But, as usual, teenagers can't exist without making a mess, can they?";
         sentences[4] = "Mind cleaning up the candy they left behind? It really kills the spooky vibe.";
-        sentences[5] = "Use WASD to move, Left Shift to run, and Space to jump.";
-        sentences[6] = "Ask my brother up on that headstone for hints if you need them.";
+        sentences[5] = "Use WASD to move, Left Shift to run, and Space to jump. Escape lets you pause.";
+        sentences[6] = "Ask my friend up on that headstone for hints if you need them.";
         #endregion
 
         whichSentence = 0;                          // set to 0 so as to use the first sentence in the sentences array when talking starts
@@ -70,7 +70,7 @@ public class PumpkinCranky : MonoBehaviour
 
     void Update()
     {
-        if (inRange && Input.GetKeyDown(KeyCode.E) && !talking)     // when you aren't talking yet but E is pressed in range, do the following:
+        if (inRange && Input.GetKeyDown(KeyCode.E) && !talking && !ui.paused)     // when you aren't talking yet but E is pressed in range and the game isn't paused, do the following:
         {
             talking = true;                                         // - set the talking value to true
             player.talking = true;                                  // - set the player's talking value to true (makes the player unable to move, in this implementation
@@ -92,7 +92,7 @@ public class PumpkinCranky : MonoBehaviour
             {
                 cont.text = "Press E to continue";          // when you've reached the last letter, the continue text pops up
 
-                if (Input.GetKeyDown(KeyCode.E))            // if E is pressed while the text is on the last letter...
+                if (Input.GetKeyDown(KeyCode.E) && !ui.paused)            // if E is pressed while the text is on the last letter...
                 {
                     if(whichSentence < sentences.Length - 1)        // so long as you haven't reached the last sentence, do the following:
                     {

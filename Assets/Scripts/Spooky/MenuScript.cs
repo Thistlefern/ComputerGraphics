@@ -13,6 +13,9 @@ public class MenuScript : MonoBehaviour
     public float minHeight;
     public float maxHeight;
     public Animator animator;
+    public new AudioSource audio;
+    public AudioClip hoverClip;
+    public AudioClip clickClip;
 
     void Update()
     {
@@ -50,5 +53,14 @@ public class MenuScript : MonoBehaviour
     public void CloseGame()
     {
         Application.Quit();
+    }
+
+    public void ButtonHover()
+    {
+        audio.PlayOneShot(hoverClip);
+    }
+    public void ButtonClick()
+    {
+        audio.PlayOneShot(clickClip);
     }
 }

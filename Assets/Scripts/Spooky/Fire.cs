@@ -12,7 +12,8 @@ public class Fire : MonoBehaviour
     public GhostQuest ghost;
     public PlayerController player;
 
-    // TODO fire sounds
+    public new AudioSource audio;
+    public AudioClip glueSound;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -32,6 +33,7 @@ public class Fire : MonoBehaviour
         fireOn = false;
         fire.loop = false;
         inRange = false;
+        audio.mute = true;
     }
 
     [System.Obsolete]
@@ -47,16 +49,22 @@ public class Fire : MonoBehaviour
                     fire.loop = true;
                     fire.Play();
                     fireOn = true;
+                    audio.mute = false;
                 }
             }
             else
             {
+                if (!fire.isPlaying)
+                {
+                    fire.Play();
+                }
                 if (ghost.questStarted && !player.hasGlue)
                 {
                     fireText.text = "Press E to make glue";
                     if (Input.GetKeyDown(KeyCode.E))
                     {
                         player.hasGlue = true;
+                        audio.PlayOneShot(glueSound);
                     }
                 }
                 else
@@ -66,6 +74,7 @@ public class Fire : MonoBehaviour
                     {
                         fire.loop = false;
                         fireOn = false;
+                        audio.mute = true;
                     }
                 }
             }
