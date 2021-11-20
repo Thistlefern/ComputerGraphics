@@ -21,6 +21,13 @@ public class WillOWisp : MonoBehaviour
     public GameObject candy3;
     public GameObject candy4;
 
+    bool candyCheck0;
+    bool candyCheck1;
+    bool candyCheck2;
+    bool candyCheck3;
+    bool candyCheck4;
+    public bool allCandyAsked;
+
     private void Start()
     {
         text.text = "";
@@ -31,6 +38,13 @@ public class WillOWisp : MonoBehaviour
         {
             particles[i].SetActive(false);
         }
+
+        candyCheck0 = false;
+        candyCheck1 = false;
+        candyCheck2 = false;
+        candyCheck3 = false;
+        candyCheck4 = false;
+        allCandyAsked = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -47,6 +61,11 @@ public class WillOWisp : MonoBehaviour
 
     private void Update()
     {
+        if(candyCheck0 && candyCheck1 && candyCheck2 && candyCheck3 && candyCheck4)
+        {
+            allCandyAsked = true;
+        }
+
         if (candyFound < player.candy)
         {
             particles[whichCandy].SetActive(false);
@@ -81,6 +100,28 @@ public class WillOWisp : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && inRange)
         {
             particles[whichCandy].SetActive(true);
+            player.helpAsked = true;
+
+            switch (whichCandy)
+            {
+                case 0:
+                    candyCheck0 = true;
+                    break;
+                case 1:
+                    candyCheck1 = true;
+                    break;
+                case 2:
+                    candyCheck2 = true;
+                    break;
+                case 3:
+                    candyCheck3 = true;
+                    break;
+                case 4:
+                    candyCheck4 = true;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

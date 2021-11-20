@@ -34,6 +34,8 @@ public class PumpkinNice : MonoBehaviour
     bool clues2;
     bool questJustReceived;
 
+    public int numberOfHints;
+
     private void OnTriggerEnter(Collider other)     // when the player enters the area of a TRIGGER collider connected to this script...
     {
         inRange = true;                             // ...note that the player is within range...
@@ -67,6 +69,8 @@ public class PumpkinNice : MonoBehaviour
         timer = 0;                                  // set the timer so it will have no accumulated time to start
 
         questJustReceived = false;
+
+        numberOfHints = 0;
     }
 
     void Update()
@@ -105,6 +109,8 @@ public class PumpkinNice : MonoBehaviour
             audio.PlayOneShot(clip);                                // - play the talking audio (this will only play once, script must be changed if audio should play for each letter/sentence
             talkBox.gameObject.SetActive(true);                     // - allow the text box to be seen
             profile.SetActive(true);                                // - allow the profile picture of this creature to be seen
+            player.helpAsked = true;
+            numberOfHints++;
         }
 
         if (talking)                                                // so long as this character is talking, anything within this statement can/will occur
@@ -142,7 +148,6 @@ public class PumpkinNice : MonoBehaviour
                         inputText = sentences[whichSentence];       // - repopulate the input text to reflect the new sentence
                         talking = false;                            // - set talking value to false
                         player.talking = false;                     // - set the player's talking value to false
-                        player.gameStarted = true;                  // - start the game, so the player can move
                         Array.Clear(letters, 0, letters.Length);    // - clear the old letters from the letters array
                         Array.Clear(output, 0, output.Length);      // - clear the output array (you would want to clear the input array as well if you are going to other sentences after this
                         letters = inputText.ToCharArray();          // - repopulate the letters array to reflect the new sentence

@@ -9415,6 +9415,7 @@ MonoBehaviour:
   player: {fileID: 1951960558}
   ui: {fileID: 771430527}
   ghost: {fileID: 169446885}
+  numberOfHints: 0
 --- !u!65 &470098637
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17910,7 +17911,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa347d2ab53829e41ab6cdbad98fbadd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pumpkin: {fileID: 0}
+  toHide: {fileID: 0}
+  toShow: {fileID: 0}
+  player: {fileID: 1951960558}
+  pumpkin: {fileID: 470098636}
+  wisps: {fileID: 815271420}
+  gate: {fileID: 1244829193}
+  bonesHelp: {fileID: 0}
+  trophyHelp: {fileID: 0}
+  bonesHint: {fileID: 0}
+  trophyHint: {fileID: 0}
+  wispFriend: 0
+  bonesWisps: {fileID: 0}
+  trophyWisps: {fileID: 0}
+  bonesTime: {fileID: 0}
+  trophyTime: {fileID: 0}
+  bonesLeave: {fileID: 0}
+  trophyLeave: {fileID: 0}
 --- !u!1 &814216019 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d4f125ab3fe581b488d72963ace1cb8c, type: 3}
@@ -18006,6 +18023,7 @@ MonoBehaviour:
   candy2: {fileID: 1463862184}
   candy3: {fileID: 1183521535}
   candy4: {fileID: 1431587823}
+  allCandyAsked: 0
 --- !u!1 &843735165
 GameObject:
   m_ObjectHideFlags: 0
@@ -36802,6 +36820,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wrongWayText: {fileID: 1384928578}
+  hitCount: 0
 --- !u!65 &1244829194
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -53309,6 +53328,9 @@ MonoBehaviour:
   candy: 0
   hasGlue: 1
   talking: 0
+  helpAsked: 0
+  timer: 0
+  awolAttempts: 0
 --- !u!82 &1951960559
 AudioSource:
   m_ObjectHideFlags: 0

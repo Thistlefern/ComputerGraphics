@@ -31,14 +31,10 @@ public class PlayerController : MonoBehaviour
 
     public bool talking;    // just determines whether you can move or not (you can't move if you are talking to someone)
 
-    // TODO achievments would be cool
-    // ideas:
-    // hint hound: ask for hints x number of times
-    // time challenge: find all the candies in x amount of time or less
-    // you're no help: ask for no help
-    // crazy jump: make a super high jump
-    // wanderlust: try and leave the boneyard x number of times
-    // will-o-wisp friend: get help from the wisps to find all pieces of candy
+    // for achievements
+    public bool helpAsked;
+    public float timer;
+    public int awolAttempts;
 
     Vector3 rotN = new Vector3(0.0f, 0.0f, 0.0f);
     Vector3 rotNE = new Vector3(0.0f, 45.0f, 0.0f);
@@ -62,6 +58,10 @@ public class PlayerController : MonoBehaviour
 
         candy = 0;
         hasGlue = false;
+
+        helpAsked = false;
+        timer = 0;
+        awolAttempts = 0;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -216,8 +216,12 @@ public class PlayerController : MonoBehaviour
         {
             if (candy == 5)
             {
-
                 SceneManager.LoadScene("SpookyWin");
+            }
+
+            if (gameStarted)
+            {
+                timer += Time.deltaTime;
             }
 
             if (Input.GetKeyDown(KeyCode.G) && !isMoving && !waving)
